@@ -43,19 +43,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Atualizar Usuário
-router.put('/:userId', async (req, res) => {
-    try {
-      const { userId } = req.params;
-      const updateData = req.body;
-      const user = await User.findOneAndUpdate({ _id: userId }, updateData, { new: true });
-      if(user) res.status(200).json({ message: 'Usuário atualizado!' });
-      else res.status(404).json({ message: 'Usuário não encontrado!' });
-    } catch (error) {
-      res.status(500).json({ message: 'Erro ao atualizar usuário!', error });
-    }
-});
-
 // Cadastrar prontuário
 router.post('/medicalRecords', async (req, res) => {
     try {
@@ -85,7 +72,7 @@ router.put('/medicalRecords/:userId', async (req, res) => {
     try {
       const { userId } = req.params;
       const updateData = req.body;
-      const medicalRecord = await MedicalRecord.findOneAndUpdate({ _id: userId }, updateData, { new: true });
+      const medicalRecord = await MedicalRecord.findOneAndUpdate({ userId }, updateData, { new: true });
       if (medicalRecord) res.status(200).json({ medicalRecord });
       else res.status(404).json({ message: 'Prontuário não encontrado!' });
     } catch (error) {

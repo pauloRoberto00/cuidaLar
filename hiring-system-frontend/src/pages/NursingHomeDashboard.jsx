@@ -6,6 +6,8 @@ import getNearbyCities from '../components/getNearbyCities';
 import * as JWT from 'jwt-decode';
 import '../styles/Dashboard.css';
 import Modal from 'react-modal';
+import ModalProfile from '../components/ModalProfile';
+import ModalPatient from '../components/ModalPatient';
 import RegisterLocationDetails from '../components/RegisterLocationDetails';
 
 Modal.setAppElement('#root'); 
@@ -21,16 +23,18 @@ const NursingHomeDashboard = () => {
   const [selectedInfo, setSelectedInfo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileData, setProfileData] = useState({
+    _id: user._id,
     name: user.name,
     cpf: user.cpf,
     email: user.email,
     state: user.state,
-    city: user.city
+    city: user.city,
+    role: user.role
   });
 
   useEffect(() => {
-    const checkLocationDetails = () => {
-      axios.get(`/api/userData/locationDetails/${user._id}`)
+    const fetchLocationDetails = () => {
+      axios.get(`/api/userData/locationDetails/${profileData._id}`)
       .then(response => {
         const locationDetails = response.data.locationDetails;
         if(locationDetails){
@@ -45,12 +49,12 @@ const NursingHomeDashboard = () => {
       .finally(() => setLoading(false));
     };
 
-    checkLocationDetails();
-  }, [user._id]);
+    fetchLocationDetails();
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const city = user.city;
+    const fetchPatients = async () => {
+      const city = profileData.city;
       const coords = await getCoordinates(city);
         if(coords){
           try{
@@ -75,33 +79,18 @@ const NursingHomeDashboard = () => {
           }
         } 
     };
-    fetchData();
-  }, [user.city]);
+    fetchPatients();
+  }, []);
 
   const handleProfileInfo = () => {
     if(registredLocationDetails) openModal("profile");
     else alert("Cadastre os detalhes de localização da casa de repouso!");
   };
+
   const handleLogout = () => {
     if(window.confirm("Tem certeza que deseja sair?")){
       localStorage.removeItem('token');
       navigate("/");
-    }
-  };
-
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
-  };
-
-  const handleSaveProfile = async () => {
-    try {
-      await axios.put(`/api/userData/${user._id}`, profileData);
-      alert('Perfil atualizado com sucesso!');
-      closeModal(); // Close modal after saving
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Erro ao atualizar perfil.');
     }
   };
 
@@ -119,14 +108,13 @@ const NursingHomeDashboard = () => {
   return (
     <div>
       <div className="navbar">
-        <Link className="nav-link" to={'/nursing-home'}>
-        <div className="logo">
-            <h1 className="logo-title">CuidaLar</h1>
+        <div className="nav-links">
+          <div className="nav-link">
             <img className="logo-img" src="../assets/logo1.png" alt="logo"/>
           </div>
-        </Link>
+        </div>
         <div className="nav-links">
-            <button className="profile-button" onClick={handleProfileInfo}>Ver Perfil</button>
+            <button className="profile-info-button" onClick={handleProfileInfo}>Ver Perfil</button>
             <button className="logout-button" onClick={handleLogout}>Sair</button>
         </div>
       </div>
@@ -134,9 +122,9 @@ const NursingHomeDashboard = () => {
         loading ? <div className="loading">Carregando...</div> : 
         registredLocationDetails ?
         (<div className="dashboard">
-          <h1>Olá {user.name}, seja bem vindo!</h1>
+          <h1>Olá {profileData.name}, seja bem vindo!</h1>
           <section>
-            <h2>Pacientes na região de {user.city}:</h2>
+            <h2>Pacientes na região de {profileData.city}:</h2>
               <ul>
                 {
                   loadingPatients ? (
@@ -169,62 +157,13 @@ const NursingHomeDashboard = () => {
               <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel="Information Modal" className="modal" overlayClassName="overlay">
                   <button className='close-modal' onClick={closeModal}>✖</button>
                   <div className='modal-content'>
-                    {
-                      selectedInfo.info === "profile" ?
-                      <div>
-                        <div>
-                          <h2>Informações do Usuário:</h2>
-                          <label>Nome de Usuário:</label>
-                          <input type="text" name="name" value={profileData.name} onChange={handleProfileChange} />
-                          <label>Cadastro de Pessoa Física (CPF):</label>
-                          <input type="text" name="cpf" value={profileData.cpf} readOnly/>
-                          <label>Endereço de Email:</label>
-                          <input type="email" name="email" value={profileData.email} onChange={handleProfileChange} />
-                          <label>Estado:</label>
-                          <input type="text" name="state" value={profileData.state} readOnly/>
-                          <label>Cidade:</label>
-                          <input type="text" name="city" value={profileData.city} readOnly/>
-                        </div>
-                        <div>
-                          <h2>Detalhes de Localização da Casa de Repouso:</h2>
-                          <label>Nome da Casa de Repouso:</label> 
-                          <input type="text" name="nursingHomeName" value={profileData.nursingHomeName} onChange={handleProfileChange}/>
-                          <label>Endereço:</label> 
-                          <input type="text" name="address" value={profileData.address} onChange={handleProfileChange}/>
-                          <label>Bairro:</label> 
-                          <input type="text" name="neighborhood" value={profileData.neighborhood} onChange={handleProfileChange}/>
-                          <label>Código de Endereçamento Postal (CEP):</label> 
-                          <input type="text" name="cep" value={profileData.cep} onChange={handleProfileChange}/>
-                          <label>Informações de Contato:</label> 
-                          <textarea name="contactInfo" value={profileData.contactInfo} onChange={handleProfileChange}/>
-                        </div>
-                        <button onClick={handleSaveProfile}>Salvar Alterações</button>
-                      </div>
-                      : selectedInfo.info === "patient" && selectedInfo.data ?
-                      <div>
-                        <div>
-                          <h2>Informações de Usuário do Paciente:</h2>
-                          <p>Nome de Usuário: {selectedInfo.data.name}</p>
-                          <p>Cadastro de Pessoa Física (CPF): {selectedInfo.data.cpf}</p>
-                          <p>Endereço de Email: {selectedInfo.data.email}</p>
-                          <p>Estado: {selectedInfo.data.state}</p>
-                          <p>Cidade: {selectedInfo.data.city}</p>
-                        </div>
-                        <div>
-                          <h2>Prontuário do Paciente:</h2>
-                          <p>Nome Completo: {selectedInfo.data.medicalRecord.patientName}</p>
-                          <p>Data de Nascimento: {selectedInfo.data.medicalRecord.birthDate}</p>
-                          <p>Gênero: {selectedInfo.data.medicalRecord.gender}</p>
-                          <p>Endereço: {selectedInfo.data.medicalRecord.address}</p>
-                          <p>Informações de Contato: {selectedInfo.data.medicalRecord.contactInfo}</p>
-                          <p>Contado de Emergência: {selectedInfo.data.medicalRecord.emergencyContact}</p>
-                          <p>Histórico Médico: {selectedInfo.data.medicalRecord.medicalHistory}</p>
-                          <p>Alergias: {selectedInfo.data.medicalRecord.allergies}</p>
-                          <p>Medicações: {selectedInfo.data.medicalRecord.medications}</p>
-                        </div>
-                      </div>
-                      : null
-                    }
+                      {
+                        selectedInfo.info === "profile" ?
+                        <ModalProfile profileData={profileData} onSetProfileData={profileData => setProfileData(profileData)} closeModal={closeModal}/>
+                        : selectedInfo.info === "patient" && selectedInfo.data ?
+                        <ModalPatient {...selectedInfo.data}/>
+                        : null
+                      }
                   </div>
               </Modal>
             )

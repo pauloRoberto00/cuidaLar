@@ -48,7 +48,7 @@ const RegisterMedicalRecord = ({ onRegistredMedicalRecord }) => {
     };
 
     return (
-        <div className="register-data-container">
+        <div className="register-data-container" style={{marginTop: "100px"}}>
             <h1>Cadastro de Prontuário Médico do Paciente</h1>
             <form className="register-data-form" onSubmit={handleSubmit}>
                 <input 

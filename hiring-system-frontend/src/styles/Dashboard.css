@@ -19,6 +19,17 @@
     width: 100%;
 }
 
+.navbar:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+}
+
+
 .logo-img {
     width: 60px;
 }
@@ -45,24 +56,21 @@
     font: 700 14px "DM Sans";
     text-transform: uppercase;
     color: #fff;
-    transition: 0.2s;
+    transition: 0.5s;
     outline: none;
 }
 
-.navbar .profile-info-button {
-    background-color: #73db73;
+.profile-info-button {
+    background-color: #222;
 }
 
-.navbar .logout-button {
+.logout-button {
     background-color: #e2346e;
 }
 
-.navbar .profile-info-button:hover {
-    background-color: #63b863;
-}
-
-.navbar .logout-button:hover {
-    background-color: #bb1e52;
+.profile-info-button:hover, .logout-button:hover{
+    background-color: #fff;
+    color: #222;
 }
 
 .dashboard {
@@ -71,7 +79,6 @@
     padding-top: 70px;
 }
 .dashboard h1 {
-
     text-align: center;
     margin-bottom: 40px;
 }
@@ -96,4 +103,16 @@
 
 .dashboard li:hover {
     background-color: #f0f0f0;
+}
+
+.comment {
+    background-color: #f0f0f0;
+    border: 2px solid #222;
+    text-align: center;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 0px 50px 20px 50px;
+    overflow-wrap: break-word;
+    text-align: justify;
+    font-family: "Ubuntu";
 }

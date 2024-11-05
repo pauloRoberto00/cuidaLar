@@ -38,12 +38,13 @@ const RegisterLocationDetails = ({ onRegistredLocationDetails }) => {
             }).catch(error => console.error('Error registering location details:', error));
         }else{
             setError('Código de Endereçamento Postal (CEP) Inválido!');
-            if(errorRef.current) errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            errorRef.current.style.display = "block";
+            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     };
 
     return (
-        <div className="register-data-container">
+        <div className="register-data-container" style={{marginTop: "100px"}}>
             <h1>Cadastro de Detalhes de Localização da Casa de Repouso</h1>
             <form className="register-data-form" onSubmit={handleSubmit}>
                 <input  
@@ -73,6 +74,7 @@ const RegisterLocationDetails = ({ onRegistredLocationDetails }) => {
                 <input  
                     type="text" 
                     name="cep" 
+                    minLength="9"
                     maxLength="9"
                     value={formData.cep} 
                     onChange={handleCEPChange} 
@@ -87,8 +89,8 @@ const RegisterLocationDetails = ({ onRegistredLocationDetails }) => {
                     required
                 ></textarea>
                 <button type="submit">Cadastrar Detalhes de Localização</button>
-                {error && <div ref={errorRef} className='register-data-error-container'>{error}</div>} 
             </form>
+            <div ref={errorRef} className='register-data-error-container'>{error}</div>
         </div>
     );
 };

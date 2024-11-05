@@ -104,7 +104,7 @@ const Home = () => {
           <div className="wrapper">
             <div className="col-a">
               <div className='header'>
-                <h4>SOBRE NÓS</h4>
+                <h4>Sobre Nós</h4>
                 <h2>Entenda quem somos e por que existimos:</h2>
               </div>
               <div className="content">
@@ -131,9 +131,9 @@ const Home = () => {
                 <img className="support-icon" src="../assets/email-icon.png" alt="email" />
                 cuidalar.cuidado@gmail.com
               </a>
-              <a className='support-link' href="https://wa.me/5511987654321" target='_blank' rel="noreferrer">
+              <a className='support-link' href="https://wa.me/5516999927225" target='_blank' rel="noreferrer">
                 <img className="support-icon" src="../assets/whatsapp-icon.png" alt="whatsapp" />
-                +55 (11) 98765-4321
+                +55 (16) 99992-7225
               </a>
             </div>
           </div>

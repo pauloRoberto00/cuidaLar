@@ -41,6 +41,16 @@
     z-index: 1000;
 }
 
+.home-navigation:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
@@ -77,13 +87,15 @@
 }
 
 .home-navigation .button {
-    background-color: #52a3da;
+    background-color: #222;
     border-radius: 5px;
+    transition: 0.5s;
     padding: 10px;
 }
 
 .home-navigation .button:hover {
-    background-color: #407ca5;
+    background-color: #fff;
+    color: #222;
 }
 
 .button {
@@ -187,8 +199,8 @@
 
 /*==== CONTACT ====*/
 #contact {
-    background-color: #dcdfdd;
-    padding: 100px;
+    background-color: #dce9e3;
+    padding: 50px;
     text-align: left;
 }
 
@@ -203,6 +215,21 @@
 #contact .content {
     display: flex;
     flex-direction: column;
+}
+
+#contact .content a {
+    background: #fff;
+    border: 1px solid #dce9e3;
+    border-radius: 20px 50px 20px 50px;
+    padding: 24px;
+    width: 300px;
+    text-align: left;
+    margin: 10px;
+}
+
+#contact .content a:hover {
+    background: #222;
+    color: #fff;
 }
 
 #contact .support-icon {
@@ -264,12 +291,31 @@
         flex-direction: column;
         gap: 10px;
         position: absolute;
-        top: 7vh;
+        top: 10vh;
         right: 0;
         background-color: #0190e2;
         padding: 20px;
         text-align: center;
-        border-bottom-left-radius: 20px;
+    }
+
+    .home-navigation-links:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 95%;
+        width: 5px;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+    }
+
+    .home-navigation-links:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
     }
 
     .home-navigation-links.open {

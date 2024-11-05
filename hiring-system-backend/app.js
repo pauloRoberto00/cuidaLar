@@ -3,6 +3,7 @@ import express, { json } from 'express';
 import { connect } from 'mongoose';
 import userDataRoutes from './routes/userData.js';
 import searchByCityRoute from './routes/searchByCity.js';
+import commentsDataRoutes from './routes/commentsData.js';
 
 dotenv.config();
 
@@ -18,5 +19,6 @@ connect(MONGO_URI)
 
 app.use('/api/userData', userDataRoutes);
 app.use('/api/searchByCity', searchByCityRoute);
+app.use('/api/commentsData', commentsDataRoutes);
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

@@ -48,7 +48,7 @@ const RegisterSpecialization = ({ onRegistredSpecialization }) => {
     };
 
     return (
-        <div className="register-data-container">
+        <div className="register-data-container" style={{marginTop: "100px"}}>
             <h1>Cadastro de Especialização do Cuidador</h1>
             <form className="register-data-form" onSubmit={handleSubmit}>
                 <input 

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const getNearbyCities = async (lat, lon) => {
   const username = 'hasuki_'
-  const radius = 50;
-  const maxRows = 30;
+  const radius = 150;
+  const maxRows = 300;
   const url = `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lon}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
 
   try {
