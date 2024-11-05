@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import Login from "../components/Login";
-import Register from '../components/Register';
-import '../styles/Home.css';
+import Login from "components/Login";
+import Register from 'components/Register';
+import 'styles/Home.css';
 
 const Home = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -38,7 +38,7 @@ const Home = () => {
     <div className='home-container'>
       <nav className="home-navigation">
         <a className="logo" href="#home">
-          <img className="logo-img" src="../assets/logo1.png" alt="CuidaLar Logo" />
+          <img className="logo-img" src="images/logo1.png" alt="CuidaLar Logo" />
         </a>
         <div className="hamburger" onClick={toggleMenu}>
           <div className="line"></div>
@@ -78,7 +78,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-b">
-              <img src="../assets/Senhora-Alegre.png" alt="Senhora alegre e sorrindo" />
+              <img src="images/Senhora-Alegre.png" alt="Senhora alegre e sorrindo" />
             </div>
           </div>
         </section>
@@ -117,7 +117,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-b">
-              <img src="assets/imageinicial1.jpg" alt="Senhora" />
+              <img src="images/imageinicial1.jpg" alt="Senhora" />
             </div>
           </div>
         </section>
@@ -128,11 +128,11 @@ const Home = () => {
             </div>
             <div className="content">
               <a className='support-link' href="mailto:cuidalar.cuidado@gmail.com?subject=Suporte+Cuida+Lar&body=Ol%C3%A1,+gostaria+de+ajuda+para+utilizar+os+servi%C3%A7os+da+Cuida+Lar." target='_blank' rel="noreferrer">
-                <img className="support-icon" src="../assets/email-icon.png" alt="email" />
+                <img className="support-icon" src="images/email-icon.png" alt="email" />
                 cuidalar.cuidado@gmail.com
               </a>
               <a className='support-link' href="https://wa.me/5516999927225" target='_blank' rel="noreferrer">
-                <img className="support-icon" src="../assets/whatsapp-icon.png" alt="whatsapp" />
+                <img className="support-icon" src="images/whatsapp-icon.png" alt="whatsapp" />
                 +55 (16) 99992-7225
               </a>
             </div>
@@ -142,7 +142,7 @@ const Home = () => {
       <footer className='home-footer'>
         <div className='home-footer-button'>
           <a className="logo" href="#home">
-            <img className="logo-img" src="../assets/logo1.png" alt="CuidaLar Logo" />
+            <img className="logo-img" src="images/logo1.png" alt="CuidaLar Logo" />
           </a>
         </div>
         <div className='home-footer-text'>
