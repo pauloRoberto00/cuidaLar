@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import Login from "components/Login";
-import Register from 'components/Register';
-import 'styles/Home.css';
+import Login from "../components/Login";
+import Register from '../components/Register';
+import '../styles/Home.css';
 
 const Home = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
