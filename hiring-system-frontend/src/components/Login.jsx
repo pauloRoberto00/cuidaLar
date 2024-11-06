@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/userData/login', formData);
+      const response = await axios.post('/api/userData?login', formData);
       const token = response.data;
       localStorage.setItem('token', token);
       const { user } = JWT.jwtDecode(token);
