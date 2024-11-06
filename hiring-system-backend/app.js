@@ -13,7 +13,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const PORT = process.env.PORT;
 
 app.use(cors({
-    origin: 'cuida-lar.vercel.app',
+    origin: 'https://cuida-lar.vercel.app',
     methods: ['GET', 'POST', 'PUT'],
     credentials: true, 
 }));  
