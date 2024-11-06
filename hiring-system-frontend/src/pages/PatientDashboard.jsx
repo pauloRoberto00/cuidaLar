@@ -124,7 +124,7 @@ const PatientDashboard = () => {
       <div className="navbar">
         <div className="nav-links">
           <div className="nav-link">
-            <img className="logo-img" src="../assets/logo1.png" alt="logo"/>
+            <img className="logo-img" src="images/logo1.png" alt="logo"/>
           </div>
         </div>
         <div className="nav-links">
