@@ -23,8 +23,8 @@ connect(MONGO_URI)
 .then(() => console.log('Conectado ao MongoDB'))
 .catch(error => console.log(error));
 
-app.use('/api/userData', userDataRoutes);
-app.use('/api/searchByCity', searchByCityRoute);
-app.use('/api/commentsData', commentsDataRoutes);
+app.use('/userData', userDataRoutes);
+app.use('/searchByCity', searchByCityRoute);
+app.use('/commentsData', commentsDataRoutes);
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
