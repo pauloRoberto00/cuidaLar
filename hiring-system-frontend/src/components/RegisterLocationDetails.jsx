@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import * as JWT from 'jwt-decode';
 import '../styles/RegisterData.css';
 import { formatCEP, isValidCEP } from './cepHandler.jsx';
@@ -32,7 +34,7 @@ const RegisterLocationDetails = ({ onRegistredLocationDetails }) => {
         const cep = formData.cep;
         const isValid = await isValidCEP(cep);
         if(isValid){
-            axios.post(`/api/userData/locationDetails/`, { ...formData, userId: user._id })
+            axios.post(`${process.env.API_URL}/userData/locationDetails/`, { ...formData, userId: user._id })
             .then(response => {
                 onRegistredLocationDetails(response.data.locationDetails);  
             }).catch(error => console.error('Error registering location details:', error));

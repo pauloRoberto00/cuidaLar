@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import { formatDate, isValidDate } from './dateHandler.jsx';
 import { formatCEP, isValidCEP } from './cepHandler.jsx';
 import '../styles/Modal.css';
@@ -29,7 +31,7 @@ const ModalProfile = ({profileData, onSetProfileData, closeModal}) => {
 
         const fetchComments = async () => {
             try {
-                const response = await axios.get(`/api/commentsData/comments/${profileData.userId}`);
+                const response = await axios.get(`${process.env.API_URL}/commentsData/comments/${profileData.userId}`);
                 setComments(response.data.comments);
             } catch (error) {
                 console.error('Erro ao carregar os comentários:', error);
@@ -78,7 +80,7 @@ const ModalProfile = ({profileData, onSetProfileData, closeModal}) => {
                     };
                     isValid = isValidDate(birthDate);
                     if(isValid){ 
-                        await axios.put(`/api/userData/medicalRecords/${profileNewData.userId}`, medicalRecordData);
+                        await axios.put(`${process.env.API_URL}/userData/medicalRecords/${profileNewData.userId}`, medicalRecordData);
                         alert('Perfil atualizado com sucesso!');
                         closeModal(); 
                     }else{ 
@@ -101,7 +103,7 @@ const ModalProfile = ({profileData, onSetProfileData, closeModal}) => {
                     };
                     isValid = isValidDate(birthDate);
                     if(isValid){ 
-                        await axios.put(`/api/userData/specializations/${profileNewData.userId}`, specializationData);
+                        await axios.put(`${process.env.API_URL}/userData/specializations/${profileNewData.userId}`, specializationData);
                         alert('Perfil atualizado com sucesso!');
                         closeModal(); // Close modal after saving
                     }else{ 
@@ -120,7 +122,7 @@ const ModalProfile = ({profileData, onSetProfileData, closeModal}) => {
                     };
                     isValid = isValidCEP(cep);
                     if(isValid){ 
-                        await axios.put(`/api/userData/locationDetails/${profileNewData.userId}`, locationDetailsData);
+                        await axios.put(`${process.env.API_URL}/userData/locationDetails/${profileNewData.userId}`, locationDetailsData);
                         alert('Perfil atualizado com sucesso!');
                         closeModal(); // Close modal after saving
                     }else{ 

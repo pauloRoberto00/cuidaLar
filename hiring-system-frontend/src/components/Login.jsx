@@ -1,8 +1,11 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import { useNavigate } from 'react-router-dom';
 import * as JWT from 'jwt-decode';
 import '../styles/RegisterData.css';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/userData/login', formData);
+      const response = await axios.post(`${process.env.API_URL}/userData/login`, formData);
       const token = response.data;
       localStorage.setItem('token', token);
       const { user } = JWT.jwtDecode(token);

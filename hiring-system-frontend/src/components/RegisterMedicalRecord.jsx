@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import * as JWT from 'jwt-decode';
 import '../styles/RegisterData.css';
 import { formatDate, isValidDate } from './dateHandler.jsx';
@@ -36,7 +38,7 @@ const RegisterMedicalRecord = ({ onRegistredMedicalRecord }) => {
         const birthDate = formData.birthDate;
         const isValid = isValidDate(birthDate);
         if(isValid){
-            axios.post(`/api/userData/medicalRecords/`, { ...formData, userId: user._id })
+            axios.post(`${process.env.API_URL}/userData/medicalRecords/`, { ...formData, userId: user._id })
             .then(response => {
                 onRegistredMedicalRecord(response.data.medicalRecord);  
             }).catch(error => console.error('Error registering medical record:', error));

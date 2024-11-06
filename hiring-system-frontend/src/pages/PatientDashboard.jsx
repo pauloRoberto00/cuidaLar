@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import getCoordinates from '../components/getCoordinates';
 import getNearbyCities from '../components/getNearbyCities';
 import * as JWT from 'jwt-decode';
@@ -37,7 +39,7 @@ const PatientDashboard = () => {
 
   useEffect(() => {
     const fetchMedicalRecord = () => {
-      axios.get(`/api/userData/medicalRecords/${profileData._id}`)
+      axios.get(`${process.env.API_URL}/userData/medicalRecords/${profileData._id}`)
       .then(response => {
         const medicalRecord = response.data.medicalRecord;
         if(medicalRecord){
@@ -68,14 +70,14 @@ const PatientDashboard = () => {
 
             for(const city of cities){
               try{
-                const caregiversResponse = await axios.get(`/api/searchByCity/city/${encodeURIComponent(city)}/caregiver`);
+                const caregiversResponse = await axios.get(`${process.env.API_URL}/searchByCity/city/${encodeURIComponent(city)}/caregiver`);
                 caregiversData.push(...(caregiversResponse.data || []));
               }catch(error){
                 console.error('Error fetching caregivers:', error);
               }
 
               try{
-                const nursingHomesResponse = await axios.get(`/api/searchByCity/city/${encodeURIComponent(city)}/nursing-home`);
+                const nursingHomesResponse = await axios.get(`${process.env.API_URL}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`);
                 nursingHomesData.push(...(nursingHomesResponse.data || []));
               }catch(error){
                 console.error('Error fetching nursing homes:', error);

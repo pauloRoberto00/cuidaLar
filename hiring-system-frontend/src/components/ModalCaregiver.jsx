@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import '../styles/Modal.css';
 
 const ModalCaregiver = data => {
@@ -10,7 +12,7 @@ const ModalCaregiver = data => {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await axios.get(`/api/commentsData/comments/${_id}`);
+                const response = await axios.get(`${process.env.API_URL}/commentsData/comments/${_id}`);
                 setComments(response.data.comments);
             } catch (error) {
                 console.error('Erro ao carregar os comentários:', error);
@@ -32,7 +34,7 @@ const ModalCaregiver = data => {
                 content: newComment,
                 date: new Date()
             };
-            await axios.post('/api/commentsData/comments/', comment);
+            await axios.post(`${process.env.API_URL}/commentsData/comments/`, comment);
             setComments(prevComments => [...prevComments, comment]);
             setNewComment('');
             alert('Comentário salvo com sucesso!');

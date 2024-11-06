@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 import { useNavigate } from 'react-router-dom';
 import * as JWT from 'jwt-decode';
 import '../styles/RegisterData.css';
@@ -57,7 +59,7 @@ const Register = () => {
     const isValid = isValidCPF(cpf);
     if(isValid){
       try {
-        const response = await axios.post('/api/userData/register', formData);
+        const response = await axios.post(`${process.env.API_URL}/userData/register`, formData);
         const token = response.data;
         localStorage.setItem('token', token);
         const { user } = JWT.jwtDecode(token);
