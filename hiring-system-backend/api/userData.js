@@ -203,9 +203,9 @@ export async function updateLocationDetails(req, res) {
 
 // -------------- Main Handler --------------
 export default async function handler(req, res) {
+  console.log(req)
   switch (req.method) {
     case 'POST':
-      console.log("peido")
       if (req.url.endsWith('/register')) return await register(req, res);
       if (req.url.endsWith('/login')) return await login(req, res);
       if (req.url.endsWith('/medicalRecords')) return await createMedicalRecord(req, res);
