@@ -125,8 +125,8 @@ const RegisterMedicalRecord = ({ onRegistredMedicalRecord }) => {
                     required 
                 />
                 <button type="submit">Cadastrar Prontuário</button>
-                <div ref={errorRef} className='register-data-error-container'>{error}</div>
             </form>
+            <div ref={errorRef} className='register-data-error-container'>{error}</div>
         </div>
     );
 };

@@ -17,10 +17,10 @@ const Register = () => {
     password: '',
     role: 'patient',
   });
-  const [error, setError] = useState('');
-  const errorRef = useRef(null);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const errorRef = useRef(null);
+  const [error, setError] = useState('');
   
   useEffect(() => {
     const fetchStates = async () => {
@@ -151,8 +151,8 @@ const Register = () => {
           <option value="nursing-home">Casa de Repouso</option>
         </select>
         <button type="submit">Cadastrar</button>
-        <div ref={errorRef} className='register-data-error-container'>{error}</div>
       </form>
+      <div ref={errorRef} className='register-data-error-container'>{error}</div>
     </div>
   );
 };

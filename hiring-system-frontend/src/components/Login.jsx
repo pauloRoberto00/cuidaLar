@@ -65,8 +65,8 @@ const Login = () => {
           required
         />
         <button type="submit">Entrar</button>
-        <div ref={errorRef} className="register-data-error-container">{error}</div>
       </form>
+      <div ref={errorRef} className="register-data-error-container">{error}</div>
     </div>
   );
 };
