@@ -31,6 +31,7 @@ const CaregiverDashboard = () => {
     city: user.city,
     role: user.role
   });
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchSpecialization = () => {
