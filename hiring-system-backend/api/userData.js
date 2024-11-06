@@ -205,23 +205,24 @@ export async function updateLocationDetails(req, res) {
 export default async function handler(req, res) {
   switch (req.method) {
     case 'POST':
-      if (req.url.includes('/register')) return await register(req, res);
-      if (req.url.includes('/login')) return await login(req, res);
-      if (req.url.includes('/medicalRecords')) return await createMedicalRecord(req, res);
-      if (req.url.includes('/specializations')) return await createSpecialization(req, res);
-      if (req.url.includes('/locationDetails')) return await createLocationDetails(req, res);
+      console.log("peido")
+      if (req.url.endsWith('/register')) return await register(req, res);
+      if (req.url.endsWith('/login')) return await login(req, res);
+      if (req.url.endsWith('/medicalRecords')) return await createMedicalRecord(req, res);
+      if (req.url.endsWith('/specializations')) return await createSpecialization(req, res);
+      if (req.url.endsWith('/locationDetails')) return await createLocationDetails(req, res);
       break;
 
     case 'GET':
-      if (req.url.includes('/medicalRecords')) return await getMedicalRecord(req, res);
-      if (req.url.includes('/specializations')) return await getSpecialization(req, res);
-      if (req.url.includes('/locationDetails')) return await getLocationDetails(req, res);
+      if (req.url.endsWith('/medicalRecords')) return await getMedicalRecord(req, res);
+      if (req.url.endsWith('/specializations')) return await getSpecialization(req, res);
+      if (req.url.endsWith('/locationDetails')) return await getLocationDetails(req, res);
       break;
 
     case 'PUT':
-      if (req.url.includes('/medicalRecords')) return await updateMedicalRecord(req, res);
-      if (req.url.includes('/specializations')) return await updateSpecialization(req, res);
-      if (req.url.includes('/locationDetails')) return await updateLocationDetails(req, res);
+      if (req.url.endsWith('/medicalRecords')) return await updateMedicalRecord(req, res);
+      if (req.url.endsWith('/specializations')) return await updateSpecialization(req, res);
+      if (req.url.endsWith('/locationDetails')) return await updateLocationDetails(req, res);
       break;
 
     default:
