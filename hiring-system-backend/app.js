@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express, { json } from 'express';
+import cors from 'cors';
 import { connect } from 'mongoose';
 import userDataRoutes from './routes/userData.js';
 import searchByCityRoute from './routes/searchByCity.js';
@@ -11,6 +12,8 @@ const app = express();
 const MONGO_URI = process.env.MONGO_URI;
 const PORT = process.env.PORT;
 
+app.use(cors());
+app.use(cors({origin: 'https://cuida-qt3hrqyfe-pauloroberto00s-projects.vercel.app'}));
 app.use(json());
 
 connect(MONGO_URI)
