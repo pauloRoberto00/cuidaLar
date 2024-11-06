@@ -1,7 +1,5 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
 import * as JWT from 'jwt-decode';
 import '../styles/RegisterData.css';
 import { formatDate, isValidDate } from './dateHandler.jsx';
@@ -22,6 +20,7 @@ const RegisterMedicalRecord = ({ onRegistredMedicalRecord }) => {
     });
     const errorRef = useRef(null);
     const [error, setError] = useState('');
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,7 +37,7 @@ const RegisterMedicalRecord = ({ onRegistredMedicalRecord }) => {
         const birthDate = formData.birthDate;
         const isValid = isValidDate(birthDate);
         if(isValid){
-            axios.post(`${process.env.API_URL}/userData/medicalRecords/`, { ...formData, userId: user._id })
+            axios.post(`${apiUrl}/userData/medicalRecords/`, { ...formData, userId: user._id })
             .then(response => {
                 onRegistredMedicalRecord(response.data.medicalRecord);  
             }).catch(error => console.error('Error registering medical record:', error));

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
 import getCoordinates from '../components/getCoordinates';
 import getNearbyCities from '../components/getNearbyCities';
 import * as JWT from 'jwt-decode';
@@ -36,7 +34,7 @@ const CaregiverDashboard = () => {
 
   useEffect(() => {
     const fetchSpecialization = () => {
-      axios.get(`${process.env.API_URL}/userData/specializations/${profileData._id}`)
+      axios.get(`${apiUrl}/userData/specializations/${profileData._id}`)
       .then(response => {
         const specialization = response.data.specialization;
         if(specialization){
@@ -66,7 +64,7 @@ const CaregiverDashboard = () => {
 
             for(const city of cities){
               try{
-                const patientsResponse = await axios.get(`${process.env.API_URL}/searchByCity/city/${encodeURIComponent(city)}/patient`);
+                const patientsResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`);
                 patientsData.push(...(patientsResponse.data || []));
               }catch(error){
                 console.error('Error fetching patients:', error);
