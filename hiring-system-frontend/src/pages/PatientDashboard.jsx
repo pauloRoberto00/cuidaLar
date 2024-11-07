@@ -107,7 +107,7 @@ const PatientDashboard = () => {
           setLoadingNursingHomes(false);
         }
       } 
-  }, [apiUrl, user.city]);
+  }, [apiUrl, profileData.city]);
   
   useEffect(() => {
     fetchCaregiversAndNursingHomes();
