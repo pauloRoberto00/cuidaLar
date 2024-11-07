@@ -5,37 +5,78 @@ import MedicalRecord from '../models/MedicalRecord.js';
 import Specialization from '../models/Specialization.js';
 import LocationDetails from '../models/LocationDetails.js';
 
+// router.get('/city/:city/:role', async (req, res) => {
+//   try {
+//     const city = req.params.city;
+//     const role = req.params.role;
+//     const users = await User.find({ city: city, role: role });
+//     const result = await Promise.all(users.map(async user => {
+//       switch(role){
+//         case 'patient':
+//           const medicalRecord = await MedicalRecord.findOne({ userId: user._id });
+//           return {
+//             ...user.toObject(),
+//             medicalRecord: medicalRecord ? medicalRecord.toObject() : null
+//           };
+//         case 'caregiver':
+//           const specialization = await Specialization.findOne({ userId: user._id });
+//           return {
+//             ...user.toObject(),
+//             specialization: specialization ? specialization.toObject() : null
+//           };
+//         case 'nursing-home':
+//           const locationDetails = await LocationDetails.findOne({ userId: user._id });
+//           return {
+//             ...user.toObject(),
+//             locationDetails: locationDetails ? locationDetails.toObject() : null
+//           };
+//         default: 
+//           break;
+//       }
+//     }));
+//     res.json(result);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
 router.get('/city/:city/:role', async (req, res) => {
+  const { city, role } = req.params;
   try {
-    const city = req.params.city;
-    const role = req.params.role;
-    const users = await User.find({ city: city, role: role });
-    const result = await Promise.all(users.map(async user => {
-      switch(role){
+    const users = await User.find({ city: city, role: role }).lean(); // Usando .lean() para obter um objeto simples
+    const userIds = users.map(user => user._id);
+
+    // Consultas em paralelo com Promise.all
+    const [medicalRecords, specializations, locationDetails] = await Promise.all([
+      MedicalRecord.find({ userId: { $in: userIds } }).lean(),
+      Specialization.find({ userId: { $in: userIds } }).lean(),
+      LocationDetails.find({ userId: { $in: userIds } }).lean()
+    ]);
+
+    const result = users.map(user => {
+      let additionalData = {};
+      switch (role) {
         case 'patient':
-          const medicalRecord = await MedicalRecord.findOne({ userId: user._id });
-          return {
-            ...user.toObject(),
-            medicalRecord: medicalRecord ? medicalRecord.toObject() : null
-          };
+          const medicalRecord = medicalRecords.find(record => record.userId.toString() === user._id.toString());
+          additionalData = { medicalRecord: medicalRecord || null };
+          break;
         case 'caregiver':
-          const specialization = await Specialization.findOne({ userId: user._id });
-          return {
-            ...user.toObject(),
-            specialization: specialization ? specialization.toObject() : null
-          };
+          const specialization = specializations.find(spec => spec.userId.toString() === user._id.toString());
+          additionalData = { specialization: specialization || null };
+          break;
         case 'nursing-home':
-          const locationDetails = await LocationDetails.findOne({ userId: user._id });
-          return {
-            ...user.toObject(),
-            locationDetails: locationDetails ? locationDetails.toObject() : null
-          };
-        default: 
+          const location = locationDetails.find(loc => loc.userId.toString() === user._id.toString());
+          additionalData = { locationDetails: location || null };
+          break;
+        default:
           break;
       }
-    }));
+      return { ...user, ...additionalData };
+    });
+
     res.json(result);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 });

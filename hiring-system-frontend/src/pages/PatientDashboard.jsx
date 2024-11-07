@@ -67,21 +67,37 @@ const PatientDashboard = () => {
             setLoadingCaregivers(true);
             setLoadingNursingHomes(true);
 
-            for(const city of cities){
-              try{
-                const caregiversResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`);
-                caregiversData.push(...(caregiversResponse.data || []));
-              }catch(error){
-                console.error('Error fetching caregivers:', error);
-              }
+            // for(const city of cities){
+            //   try{
+            //     const caregiversResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`);
+            //     caregiversData.push(...(caregiversResponse.data || []));
+            //   }catch(error){
+            //     console.error('Error fetching caregivers:', error);
+            //   }
 
-              try{
-                const nursingHomesResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`);
-                nursingHomesData.push(...(nursingHomesResponse.data || []));
-              }catch(error){
-                console.error('Error fetching nursing homes:', error);
-              }
-            }
+            //   try{
+            //     const nursingHomesResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`);
+            //     nursingHomesData.push(...(nursingHomesResponse.data || []));
+            //   }catch(error){
+            //     console.error('Error fetching nursing homes:', error);
+            //   }
+            // }
+
+// Criando um array de promessas para buscar cuidadores e casas de repouso
+            
+            const caregiversPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
+            );
+
+            const nursingHomesPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
+            );
+
+            const caregiversResponses = await Promise.all(caregiversPromises);
+            const nursingHomesResponses = await Promise.all(nursingHomesPromises);
+
+            caregiversResponses.forEach(response => caregiversData.push(...response.data));
+            nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
 
             setCaregivers(caregiversData);
             setNursingHomes(nursingHomesData);
