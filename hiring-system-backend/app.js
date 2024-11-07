@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connect } from 'mongoose';
 import userDataRoutes from './routes/userData.js';
 import searchByCityRoute from './routes/searchByCity.js';
+import searchNearbyCitiesRoute from './routes/searchNearbyCities.js';
 import commentsDataRoutes from './routes/commentsData.js';
 
 dotenv.config();
@@ -25,6 +26,7 @@ connect(MONGO_URI)
 
 app.use('/userData', userDataRoutes);
 app.use('/searchByCity', searchByCityRoute);
+app.use('/searchNearbyCities', searchNearbyCitiesRoute);
 app.use('/commentsData', commentsDataRoutes);
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
