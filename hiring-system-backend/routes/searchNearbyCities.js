@@ -5,7 +5,7 @@ router.get('/', async (req, res) => {
   const { lat, lng, radius, maxRows, username } = req.params;
   const url = `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
 
-  fetch(url)
+  await fetch(url)
   .then(response => res.json(response.data)
   .catch(error => {
       console.log(body);
