@@ -12,7 +12,7 @@ const searchNearbyCities = async (lat, lng) => {
         lng: lng,
         username: 'hasuki_',
         radius: 300,
-        maxRows: 300,
+        maxRows: 400,
       }
     });
     console.log(response.data.geonames)
