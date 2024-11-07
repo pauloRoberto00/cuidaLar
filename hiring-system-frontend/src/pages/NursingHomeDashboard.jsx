@@ -87,7 +87,7 @@ const NursingHomeDashboard = () => {
         } 
     };
     fetchPatients();
-  }, [profileData.city]);
+  }, []);
 
   const handleProfileInfo = () => {
     if(registredLocationDetails) openModal("profile");
