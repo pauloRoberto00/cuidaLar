@@ -96,8 +96,12 @@ const PatientDashboard = () => {
             const caregiversResponses = await Promise.all(caregiversPromises);
             const nursingHomesResponses = await Promise.all(nursingHomesPromises);
 
-            caregiversResponses.forEach(response => caregiversData.push(...response.data));
-            nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
+            caregiversResponses.forEach(response => {
+              if(!caregiversData.includes(response.data)) caregiversData.push(...response.data);
+            });
+            nursingHomesResponses.forEach(response => {
+              if(!nursingHomesData.includes(response.data)) nursingHomesData.push(...response.data)
+            });
 
             setCaregivers(caregiversData);
             setNursingHomes(nursingHomesData);
