@@ -17,7 +17,7 @@ const searchNearbyCities = async (lat, lng) => {
     });
     return response.data.geonames ? response.data.geonames.map(city => city.name) : [];
   } catch (error) {
-    console.error('Error fetching nearby cities:', error.message);
+    console.error('Error fetching nearby cities:', error);
     return [];
   }
 };
