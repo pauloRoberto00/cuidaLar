@@ -95,7 +95,7 @@ const PatientDashboard = () => {
         }
     } 
     if(!dataFetched) fetchCaregiversAndNursingHomes();
-  }, [apiUrl, profileData.city]);
+  }, [profileData.city, apiUrl, dataFetched]);
   
   const handleProfileInfo = () => {
     if(registredMedicalRecord) openModal("profile");
