@@ -63,14 +63,20 @@ const CaregiverDashboard = () => {
             const patientsData = [];
             setLoadingPatients(true);
 
-            for(const city of cities){
-              try{
-                const patientsResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`);
-                patientsData.push(...(patientsResponse.data || []));
-              }catch(error){
-                console.error('Error fetching patients:', error);
-              }
-            }
+            // for(const city of cities){
+            //   try{
+            //     const patientsResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`);
+            //     patientsData.push(...(patientsResponse.data || []));
+            //   }catch(error){
+            //     console.error('Error fetching patients:', error);
+            //   }
+            // }
+
+            const patientsPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`)
+            );
+            const patientsResponses = await Promise.all(patientsPromises);
+            patientsResponses.forEach(response => patientsData.push(...response.data));
 
             setPatients(patientsData);
           }catch (error) {
