@@ -56,7 +56,7 @@ const PatientDashboard = () => {
   }, [apiUrl, profileData._id]);
 
   useEffect(() => {
-    const fetchCaregiversAndNursingHomes = async () => {
+    const fetchCaregiversAndNursingHomes = useCallback(async () => {
       const city = profileData.city;
       const coords = await getCoordinates(city);
         if(coords){
@@ -108,7 +108,7 @@ const PatientDashboard = () => {
             setLoadingNursingHomes(false);
           }
         } 
-    };
+    });
     fetchCaregiversAndNursingHomes();
   }, [apiUrl, profileData.city]);
   
