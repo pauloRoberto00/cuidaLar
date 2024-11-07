@@ -57,7 +57,7 @@ const PatientDashboard = () => {
 
   useEffect(() => {
     const fetchCaregiversAndNursingHomes = async () => {
-      const city = user.city;
+      const city = profileData.city;
       const coords = await getCoordinates(city);
         if(coords){
           try{
