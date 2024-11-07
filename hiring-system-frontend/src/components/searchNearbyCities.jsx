@@ -11,11 +11,10 @@ const searchNearbyCities = async (lat, lng) => {
         lat: lat,
         lng: lng,
         username: 'hasuki_',
-        radius: 300,
+        radius: 150,
         maxRows: 300,
       }
     });
-    console.log(response.data.geonames);
     return response.data.geonames ? response.data.geonames.map(city => city.name) : [];
   } catch (error) {
     console.error('Error fetching nearby cities:', error);
