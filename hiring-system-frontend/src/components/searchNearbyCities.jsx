@@ -11,7 +11,7 @@ const searchNearbyCities = async (lat, lng) => {
         lat: lat,
         lng: lng,
         username: 'hasuki_',
-        radius: 200,
+        radius: 300,
         maxRows: 350,
       }
     });
