@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import getCoordinates from '../components/getCoordinates';
@@ -56,64 +56,46 @@ const PatientDashboard = () => {
     fetchMedicalRecord();
   }, [apiUrl, profileData._id]);
 
-  const fetchCaregiversAndNursingHomes = useCallback(async () => {
-    const city = profileData.city;
-    const coords = await getCoordinates(city);
-      if(coords){
-        try{
-          const cities = await searchNearbyCities(coords.lat, coords.lon);
-          const caregiversData = [];
-          const nursingHomesData = [];
-          setLoadingCaregivers(true);
-          setLoadingNursingHomes(true);
-
-          // for(const city of cities){
-          //   try{
-          //     const caregiversResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`);
-          //     caregiversData.push(...(caregiversResponse.data || []));
-          //   }catch(error){
-          //     console.error('Error fetching caregivers:', error);
-          //   }
-
-          //   try{
-          //     const nursingHomesResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`);
-          //     nursingHomesData.push(...(nursingHomesResponse.data || []));
-          //   }catch(error){
-          //     console.error('Error fetching nursing homes:', error);
-          //   }
-          // }
-
-// Criando um array de promessas para buscar cuidadores e casas de repouso
-          
-          const caregiversPromises = cities.map(city =>
-            axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
-          );
-
-          const nursingHomesPromises = cities.map(city =>
-            axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
-          );
-
-          const caregiversResponses = await Promise.all(caregiversPromises);
-          const nursingHomesResponses = await Promise.all(nursingHomesPromises);
-
-          caregiversResponses.forEach(response => caregiversData.push(...response.data));
-          nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
-
-          setCaregivers(caregiversData);
-          setNursingHomes(nursingHomesData);
-          setDataFetched(true);
-        }catch (error) {
-          console.error('Error fetching data:', error);
-        } finally {
-          setLoadingCaregivers(false);
-          setLoadingNursingHomes(false);
-        }
-      } 
-  }, [apiUrl, profileData.city]);
 
   useEffect(() => {
+    const fetchCaregiversAndNursingHomes = async () => {
+      const city = profileData.city;
+      const coords = await getCoordinates(city);
+        if(coords){
+          try{
+            const cities = await searchNearbyCities(coords.lat, coords.lon);
+            const caregiversData = [];
+            const nursingHomesData = [];
+            setLoadingCaregivers(true);
+            setLoadingNursingHomes(true);
+      
+            const caregiversPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
+            );
+  
+            const nursingHomesPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
+            );
+  
+            const caregiversResponses = await Promise.all(caregiversPromises);
+            const nursingHomesResponses = await Promise.all(nursingHomesPromises);
+  
+            caregiversResponses.forEach(response => caregiversData.push(...response.data));
+            nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
+  
+            setCaregivers(caregiversData);
+            setNursingHomes(nursingHomesData);
+            setDataFetched(true);
+          }catch (error) {
+            console.error('Error fetching data:', error);
+          } finally {
+            setLoadingCaregivers(false);
+            setLoadingNursingHomes(false);
+          }
+        }
+    } 
     if(!dataFetched) fetchCaregiversAndNursingHomes();
-  }, [fetchCaregiversAndNursingHomes]);
+  }, [apiUrl, profileData.city]);
   
   const handleProfileInfo = () => {
     if(registredMedicalRecord) openModal("profile");
