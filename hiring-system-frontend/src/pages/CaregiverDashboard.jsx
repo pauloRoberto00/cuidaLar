@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import getCoordinates from '../components/getCoordinates';
-import getNearbyCities from '../components/getNearbyCities';
+import searchNearbyCities from '../components/searchNearbyCities';
 import * as JWT from 'jwt-decode';
 import '../styles/Dashboard.css';
 import Modal from 'react-modal';
@@ -59,7 +59,7 @@ const CaregiverDashboard = () => {
       const coords = await getCoordinates(city);
         if(coords){
           try{
-            const cities = await getNearbyCities(coords.lat, coords.lon);
+            const cities = await searchNearbyCities(coords.lat, coords.lon);
             const patientsData = [];
             setLoadingPatients(true);
 
