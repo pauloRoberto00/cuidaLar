@@ -53,7 +53,7 @@ const PatientDashboard = () => {
       .finally(() => setLoading(false));
     };
     fetchMedicalRecord();
-  }, []);
+  }, [apiUrl, profileData._id]);
 
   useEffect(() => {
     const fetchCaregiversAndNursingHomes = async () => {
@@ -110,8 +110,12 @@ const PatientDashboard = () => {
         } 
     };
     fetchCaregiversAndNursingHomes();
-  }, []);
+  }, [apiUrl, profileData.city]);
   
+  useEffect(() => {
+    fetchCaregiversAndNursingHomes();
+  }, [fetchCaregiversAndNursingHomes]);
+
   const handleProfileInfo = () => {
     if(registredMedicalRecord) openModal("profile");
     else alert("Cadastre o prontuário do paciente!");
