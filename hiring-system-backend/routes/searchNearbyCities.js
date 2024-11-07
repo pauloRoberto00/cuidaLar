@@ -4,7 +4,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   const { lat, lng, radius, maxRows, username } = req.query;
-  const url = `http://api.geonames.org/findNearbyCityNameJSON?lat=${lat}&lng=${lng}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
+  const url = `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
 
   try {
     const response = await axios.get(url);
