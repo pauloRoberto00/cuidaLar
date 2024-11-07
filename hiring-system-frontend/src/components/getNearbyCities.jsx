@@ -1,13 +1,17 @@
 import axios from 'axios';
 
-const getNearbyCities = async (lat, lon) => {
-  const username = 'hasuki_'
-  const radius = 150;
-  const maxRows = 300;
-  const url = `https://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lon}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
+const getNearbyCities = async (lat, lng) => {
+  // const url = `https//api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lon}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
+  const url = "https://geonames-proxy.onrender.com/geonames/findNearby";
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      lat: lat,
+      lng: lng,
+      username: 'hasuki_',
+      radius: 150,
+      maxRows: 300,
+    });
     return response.data.geonames.map(city => city.name);
   } catch (error) {
     console.error('Error fetching nearby cities:', error.message);
