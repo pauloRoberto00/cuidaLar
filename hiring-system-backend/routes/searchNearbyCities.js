@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/searchNearbyCities', async (req, res) => {
-  const { lat, lng, radius, maxRows, username } = req.query;
+  const { lat, lng, radius, maxRows, username } = req.params;
   const url = `https//api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&radius=${radius}&maxRows=${maxRows}&username=${username}`;
 
   try {
