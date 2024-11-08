@@ -145,7 +145,7 @@ const ModalCaregiver = data => {
                     value={newComment} 
                     onChange={handleCommentChange} 
                 />
-                <button onClick={handleSaveComment}>Salvar Comentário</button>
+                <button className="save-button" onClick={handleSaveComment}>Salvar Comentário</button>
             </div>
         </div>
     );

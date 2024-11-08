@@ -261,7 +261,7 @@ const ModalProfile = ({profileData, onSetProfileData, closeModal}) => {
                             </div>
                             : null
             }
-            <button onClick={handleSaveProfile}>Salvar Alterações</button>
+            <button className="save-button" onClick={handleSaveProfile}>Salvar Alterações</button>
             <div ref={errorRef} className='register-data-error-container'>{error}</div>
         </div>
     );
