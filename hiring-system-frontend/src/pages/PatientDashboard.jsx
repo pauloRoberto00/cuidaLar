@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import getCoordinates from '../components/getCoordinates';
@@ -57,48 +57,45 @@ const PatientDashboard = () => {
   }, [apiUrl, profileData._id]);
 
 
-  const fetchCaregiversAndNursingHomes = useCallback(async () => {
-    if (!dataFetched) {
+  useEffect(() => {
+    const fetchCaregiversAndNursingHomes = async () => {
       const city = profileData.city;
       const coords = await getCoordinates(city);
-      if (coords) {
-        try {
-          const cities = await searchNearbyCities(coords.lat, coords.lng);
-          const caregiversData = [];
-          const nursingHomesData = [];
-          setLoadingCaregivers(true);
-          setLoadingNursingHomes(true);
-
-          const caregiversPromises = cities.map((city) =>
-            axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
-          );
-
-          const nursingHomesPromises = cities.map((city) =>
-            axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
-          );
-
-          const caregiversResponses = await Promise.all(caregiversPromises);
-          const nursingHomesResponses = await Promise.all(nursingHomesPromises);
-
-          caregiversResponses.forEach((response) => caregiversData.push(...response.data));
-          nursingHomesResponses.forEach((response) => nursingHomesData.push(...response.data));
-
-          setCaregivers(caregiversData);
-          setNursingHomes(nursingHomesData);
-          setDataFetched(true); // Marque como fetch completo após execução bem-sucedida
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        } finally {
-          setLoadingCaregivers(false);
-          setLoadingNursingHomes(false);
+        if(coords){
+          try{
+            const cities = await searchNearbyCities(coords.lat, coords.lng);
+            const caregiversData = [];
+            const nursingHomesData = [];
+            setLoadingCaregivers(true);
+            setLoadingNursingHomes(true);
+      
+            const caregiversPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
+            );
+  
+            const nursingHomesPromises = cities.map(city =>
+              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
+            );
+  
+            const caregiversResponses = await Promise.all(caregiversPromises);
+            const nursingHomesResponses = await Promise.all(nursingHomesPromises);
+  
+            caregiversResponses.forEach(response => caregiversData.push(...response.data));
+            nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
+  
+            setCaregivers(caregiversData);
+            setNursingHomes(nursingHomesData);
+            setDataFetched(true);
+          }catch (error) {
+            console.error('Error fetching data:', error);
+          } finally {
+            setLoadingCaregivers(false);
+            setLoadingNursingHomes(false);
+          }
         }
-      }
-    }
-  }, [dataFetched, apiUrl, profileData.city]);
-
-  useEffect(() => {
-    fetchCaregiversAndNursingHomes();
-  }, [fetchCaregiversAndNursingHomes]);
+    } 
+    if(!dataFetched) fetchCaregiversAndNursingHomes();
+  }, []);
   
   const handleProfileInfo = () => {
     if(registredMedicalRecord) openModal("profile");
