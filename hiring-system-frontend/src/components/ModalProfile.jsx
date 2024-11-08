@@ -252,7 +252,7 @@ const ModalProfile = ({profileData, onSetProfileData, closeModal}) => {
                                             <div key={index} className="comment">
                                                 <p>"{comment.content}"</p>
                                                 <p>
-                                                    <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>
+                                                    <strong>{comment.authorUserName} - {new Date(comment.date).toLocaleString()}</strong>
                                                 </p>
                                             </div>
                                         ))

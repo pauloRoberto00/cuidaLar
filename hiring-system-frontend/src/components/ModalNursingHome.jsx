@@ -28,9 +28,9 @@ const ModalNursingHome = data => {
         try {
             const comment = {
                 userId: _id, 
-                userName: data.profileData.name,
-                type: 'nursing-home', 
                 content: newComment,
+                authorUserId: data.profileData._id,
+                authorUserName: data.profileData.name,
                 date: new Date()
             };
             await axios.post(`${apiUrl}/commentsData/comments/`, comment);
@@ -111,12 +111,12 @@ const ModalNursingHome = data => {
                     ) : (
                         comments.map((comment, index) => (
                             <div key={index} className="comment">
-                                {comment.userId === data.profileData._id && (
+                                {comment.authorUserId === data.profileData._id && (
                                     <button className='close-button' onClick={() => handleDeleteComment(comment._id)}>✖</button>
                                 )}
                                 <p>"{comment.content}"</p>
                                 <p>
-                                    <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>
+                                    <strong>{comment.authorUserName} - {new Date(comment.date).toLocaleString()}</strong>
                                 </p>
                             </div>
                         ))
