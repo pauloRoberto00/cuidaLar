@@ -94,7 +94,7 @@ const PatientDashboard = () => {
           }
         }
     } 
-    if(!dataFetched) fetchCaregiversAndNursingHomes();
+    if(dataFetched == false) fetchCaregiversAndNursingHomes();
   }, [profileData.city, apiUrl, dataFetched]);
   
   const handleProfileInfo = () => {
