@@ -27,14 +27,14 @@ router.get('/comments/:userId', async (req, res) => {
 router.delete('/comments/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        if(!id.match(/^[0-9a-fA-F]{24}$/)) return res.status(400).json({ message: 'ID de comentário inválido.' });
         const comment = await Comment.findById(id);
-        if(comment){
-            await comment.remove();
-            res.status(200).json({ message: 'Comentário deletado com sucesso!' });
-        } else{
-            res.status(404).json({ message: 'Comentário não encontrado!' });
-        }
+        res.status(200).json({ comment: comment });
+        // if(comment){
+        //     await comment.remove();
+        //     res.status(200).json({ message: 'Comentário deletado com sucesso!' });
+        // } else{
+        //     res.status(404).json({ message: 'Comentário não encontrado!' });
+        // }
     } catch (error) {
         res.status(500).json({ message: 'Erro ao deletar comentário!', error });
     }
