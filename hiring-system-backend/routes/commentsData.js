@@ -24,4 +24,14 @@ router.get('/comments/:userId', async (req, res) => {
     }
 });
 
+router.delete('/comments/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const comment = await Comment.findById(id);
+        if(comment) res.status(200).json({ message: 'Comentário deletado' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao deletar comentário!', error });
+    }
+});
+
 export default router;

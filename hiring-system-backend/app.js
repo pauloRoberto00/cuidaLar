@@ -15,7 +15,7 @@ const PORT = process.env.PORT;
 
 app.use(cors({
     origin: 'https://cuida-lar.vercel.app',
-    methods: ['GET', 'POST', 'PUT'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, 
 }));  
 app.use(json());

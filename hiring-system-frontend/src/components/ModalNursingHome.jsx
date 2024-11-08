@@ -43,6 +43,17 @@ const ModalNursingHome = data => {
         }
     };
 
+    const handleDeleteComment = async (commentId) => {
+        if(window.confirm("Tem certeza que deseja deletar o comentário?")){
+            try {
+                await axios.delete(`${apiUrl}/commentsData/comments/`, commentId);
+            } catch (error) {
+                console.error('Erro ao deletar comentário:', error);
+                alert('Erro ao deletar comentário.');
+            }
+        }
+    };
+
     return (
         <div>
             <div>
@@ -99,7 +110,7 @@ const ModalNursingHome = data => {
                     ) : (
                         comments.map((comment, index) => (
                             <div key={index} className="comment">
-                                 <button className='comment-delete' onClick={handleDeleteComment}>✖</button>
+                                <button className='comment-delete' onClick={handleDeleteComment(comment._id)}>✖</button>
                                 <p>"{comment.content}"</p>
                                 <p>
                                     <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>
