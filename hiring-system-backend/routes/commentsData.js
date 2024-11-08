@@ -4,8 +4,8 @@ const router = Router();
 
 router.post('/comments', async (req, res) => {
     try {
-        const { userId, userName, type, content, date } = req.body;
-        const comment = new Comment({ userId, userName, type, content, date });
+        const { userId, content, authorUserId, authorUserName, date } = req.body;
+        const comment = new Comment({ userId, content, authorUserId, authorUserName, date });
         await comment.save();
         res.status(201).json({ comment });
     } catch (error) {
