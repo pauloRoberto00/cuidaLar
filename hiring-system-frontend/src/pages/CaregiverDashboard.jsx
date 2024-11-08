@@ -56,10 +56,11 @@ const CaregiverDashboard = () => {
 
   useEffect(() => {
     const fetchPatients = async () => {
-      const city = profileData.city;
-      const coords = await getCoordinates(city);
-        if(coords){
-          try{
+      setLoadingPatients(true);
+      try{
+          const city = profileData.city;
+          const coords = await getCoordinates(city);
+          if(coords){
             const cities = [];
             const stateCities = await getCities(profileData.state);
             const stateCitiesNames = stateCities.map(city => city.nome)
@@ -68,19 +69,18 @@ const CaregiverDashboard = () => {
               if(stateCitiesNames.includes(place) && !cities.includes(place)) cities.push(place); 
             });
             const patientsData = [];
-            setLoadingPatients(true);
 
             const patientsPromises = cities.map(city => axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`));
             const patientsResponses = await Promise.all(patientsPromises);
             patientsResponses.forEach(response => patientsData.push(...response.data));
 
             setPatients(patientsData);
-          }catch (error) {
-            console.error('Error fetching data:', error);
-          } finally {
-            setLoadingPatients(false);
           }
-        } 
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoadingPatients(false);
+      }
     };
     fetchPatients();
   }, []);
@@ -92,7 +92,7 @@ const CaregiverDashboard = () => {
   const handleLogout = () => {
     if(window.confirm("Tem certeza que deseja sair?")){
       localStorage.removeItem('token');
-      navigate("/");
+      setTimeout(() => navigate("/"), 0);
     }
   };
 
