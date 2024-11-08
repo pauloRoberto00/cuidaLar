@@ -69,7 +69,7 @@ const PatientDashboard = () => {
             console.log(stateCitiesNames)
             const places = await searchNearbyPlaces(coords.lat, coords.lng);
             places.map(place => {
-              if(stateCitiesNames.includes(place)) cities.push(place); 
+              if(stateCitiesNames.includes(place) && !cities.includes(place)) cities.push(place); 
             });
             const caregiversData = [];
             const nursingHomesData = [];
