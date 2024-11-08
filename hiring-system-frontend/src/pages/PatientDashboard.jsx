@@ -64,7 +64,6 @@ const PatientDashboard = () => {
         if(coords){
           try{
             const cities = await searchNearbyCities(coords.lat, coords.lng);
-            console.log(cities)
             const caregiversData = [];
             const nursingHomesData = [];
             setLoadingCaregivers(true);
@@ -76,16 +75,11 @@ const PatientDashboard = () => {
             const caregiversResponses = await Promise.all(caregiversPromises);
             const nursingHomesResponses = await Promise.all(nursingHomesPromises);
   
-            caregiversResponses.forEach(response => {
-              if(!caregiversData.includes(response.data)) caregiversData.push(...response.data);
-            });
-            nursingHomesResponses.forEach(response => {
-              if(!nursingHomesData.includes(response.data)) nursingHomesData.push(...response.data);
-            });
-            
+            caregiversResponses.forEach(response => caregiversData.push(...response.data));
+            nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
+  
             setCaregivers(caregiversData);
             setNursingHomes(nursingHomesData);
-            console.log(nursingHomesData)
             setDataFetched(true);
           }catch (error) {
             console.error('Error fetching data:', error);
