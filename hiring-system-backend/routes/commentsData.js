@@ -24,10 +24,11 @@ router.get('/comments/:userId', async (req, res) => {
     }
 });
 
-router.delete('/comments/:_id', async (req, res) => {
+router.delete('/comments/:id', async (req, res) => {
     try {
-        const { _id } = req.params;
-        const comment = await Comment.findOne({ _id });
+        const { id } = req.params;
+        if(!id.match(/^[0-9a-fA-F]{24}$/)) return res.status(400).json({ message: 'ID de comentário inválido.' });
+        const comment = await Comment.findById(id);
         if(comment){
             await comment.remove();
             res.status(200).json({ message: 'Comentário deletado com sucesso!' });
