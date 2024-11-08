@@ -92,7 +92,7 @@ const CaregiverDashboard = () => {
   const handleLogout = () => {
     if(window.confirm("Tem certeza que deseja sair?")){
       localStorage.removeItem('token');
-      setTimeout(() => navigate("/"), 0);
+      navigate("/");
     }
   };
 

@@ -25,7 +25,6 @@ const ModalCaregiver = data => {
 
     const handleSaveComment = async () => {
         if (!newComment.trim()) return;
-        console.log(comments)
         try {
             const comment = {
                 userId: _id, 
