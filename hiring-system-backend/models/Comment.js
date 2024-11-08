@@ -6,9 +6,9 @@ const commentSchema = new Schema({
         ref: 'User',
         required: true
     },
-    userName: { type: String, required: true },
-    type: { type: String, required: true },
     content: { type: String, required: true },
+    authorUserId: { type: String, required: true },
+    authorUserName: { type: String, required: true },
     date: { type: Date, required: true }
 });
 
