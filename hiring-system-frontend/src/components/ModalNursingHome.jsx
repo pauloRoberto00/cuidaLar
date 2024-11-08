@@ -111,14 +111,12 @@ const ModalNursingHome = data => {
                         <p>Não há comentários ainda.</p>
                     ) : (
                         comments.map((comment, index) => (
-                            <div>
+                            <div key={index} className="comment">
                                 <button className='comment-delete' onClick={()=> handleDeleteComment(comment._id)}>✖</button>
-                                <div key={index} className="comment">
-                                    <p>"{comment.content}"</p>
-                                    <p>
-                                        <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>
-                                    </p>
-                                </div>
+                                <p>"{comment.content}"</p>
+                                <p>
+                                    <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>
+                                </p>
                             </div>
                         ))
                     )}

@@ -24,10 +24,10 @@ router.get('/comments/:userId', async (req, res) => {
     }
 });
 
-router.delete('/comments/:id', async (req, res) => {
+router.delete('/comments/:_id', async (req, res) => {
     try {
-        const { id } = req.params;
-        const comment = await Comment.findOne({ _id: id });
+        const { _id } = req.params;
+        const comment = await Comment.findOne({ _id });
         if(comment){
             await comment.remove();
             res.status(200).json({ message: 'Comentário deletado com sucesso!' });
