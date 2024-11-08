@@ -76,10 +76,10 @@ const PatientDashboard = () => {
             const nursingHomesResponses = await Promise.all(nursingHomesPromises);
   
             caregiversResponses.forEach(response => {
-              console.log(response.data)
               if(!caregiversData.includes(response.data)) caregiversData.push(...response.data);
             });
             nursingHomesResponses.forEach(response => {
+              console.log(response.data)
               if(!nursingHomesData.includes(response.data)) nursingHomesData.push(...response.data);
             });
   
