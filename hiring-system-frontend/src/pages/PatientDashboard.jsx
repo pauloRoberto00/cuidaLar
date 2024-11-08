@@ -79,12 +79,12 @@ const PatientDashboard = () => {
               if(!caregiversData.includes(response.data)) caregiversData.push(...response.data);
             });
             nursingHomesResponses.forEach(response => {
-              console.log(response.data)
               if(!nursingHomesData.includes(response.data)) nursingHomesData.push(...response.data);
             });
-  
+            
             setCaregivers(caregiversData);
             setNursingHomes(nursingHomesData);
+            console.log(nursingHomesData)
             setDataFetched(true);
           }catch (error) {
             console.error('Error fetching data:', error);
