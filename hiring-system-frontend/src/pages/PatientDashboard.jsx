@@ -21,7 +21,6 @@ const PatientDashboard = () => {
   const [nursingHomes, setNursingHomes] = useState([]);
   const [loadingCaregivers, setLoadingCaregivers] = useState(true);
   const [loadingNursingHomes, setLoadingNursingHomes] = useState(true);
-  const [dataFetched, setDataFetched] = useState(false);
   const [registredMedicalRecord, setRegistredMedicalRecord] = useState(false)
   const [loading, setLoading] = useState(true);
   const [selectedInfo, setSelectedInfo] = useState(null);
@@ -64,6 +63,8 @@ const PatientDashboard = () => {
         if(coords){
           try{
             const cities = await searchNearbyCities(coords.lat, coords.lng);
+
+            console.log(cities)
             const caregiversData = [];
             const nursingHomesData = [];
             setLoadingCaregivers(true);
@@ -80,7 +81,6 @@ const PatientDashboard = () => {
   
             setCaregivers(caregiversData);
             setNursingHomes(nursingHomesData);
-            setDataFetched(true);
           }catch (error) {
             console.error('Error fetching data:', error);
           } finally {
@@ -89,7 +89,7 @@ const PatientDashboard = () => {
           }
         }
     } 
-    if(!dataFetched) fetchCaregiversAndNursingHomes();
+    fetchCaregiversAndNursingHomes();
   }, []);
   
   const handleProfileInfo = () => {
