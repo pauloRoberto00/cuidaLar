@@ -62,9 +62,10 @@ const CaregiverDashboard = () => {
           try{
             const cities = [];
             const stateCities = await getCities(profileData.state);
+            const stateCitiesNames = stateCities.map(city => city.nome)
             const places = await searchNearbyPlaces(coords.lat, coords.lng);
             places.map(place => {
-              if(stateCities.includes(place)) cities.push(place); 
+              if(stateCitiesNames.includes(place) && !cities.includes(place)) cities.push(place); 
             });
             const patientsData = [];
             setLoadingPatients(true);
