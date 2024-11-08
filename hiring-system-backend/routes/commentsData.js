@@ -27,14 +27,9 @@ router.get('/comments/:userId', async (req, res) => {
 router.delete('/comments/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const comment = await Comment.findById(id);
-        res.status(200).json({ comment: comment });
-        // if(comment){
-        //     await comment.remove();
-        //     res.status(200).json({ message: 'Comentário deletado com sucesso!' });
-        // } else{
-        //     res.status(404).json({ message: 'Comentário não encontrado!' });
-        // }
+        const comment = await Comment.findByIdAndDelete(id);
+        if(comment) res.status(200).json({ message: 'Comentário deletado com sucesso!' });
+        else res.status(404).json({ message: 'Comentário não encontrado!' });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao deletar comentário!', error });
     }
