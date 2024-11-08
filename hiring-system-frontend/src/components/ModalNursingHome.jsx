@@ -28,7 +28,7 @@ const ModalNursingHome = data => {
         try {
             const comment = {
                 userId: _id, 
-                userName: data.userName,
+                userName: data.profileData.name,
                 type: 'nursing-home', 
                 content: newComment,
                 date: new Date()
@@ -111,7 +111,9 @@ const ModalNursingHome = data => {
                     ) : (
                         comments.map((comment, index) => (
                             <div key={index} className="comment">
-                                <button className='close-button' onClick={()=> handleDeleteComment(comment._id)}>✖</button>
+                                {comment.userId === data.profileData._id && (
+                                    <button className='close-button' onClick={() => handleDeleteComment(comment._id)}>✖</button>
+                                )}
                                 <p>"{comment.content}"</p>
                                 <p>
                                     <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>

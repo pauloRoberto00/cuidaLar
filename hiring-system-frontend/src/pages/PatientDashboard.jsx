@@ -207,9 +207,9 @@ const PatientDashboard = () => {
                       selectedInfo.info === "profile" ?
                       <ModalProfile profileData={profileData} onSetProfileData={profileData => setProfileData(profileData)} closeModal={closeModal}/>
                       : selectedInfo.info === "caregiver" && selectedInfo.data ?
-                      <ModalCaregiver data={{...selectedInfo.data}} userName={profileData.name}/>
+                      <ModalCaregiver selectedData={{...selectedInfo.data}} profileData={profileData}/>
                       : selectedInfo.info === "nursingHome" && selectedInfo.data ?
-                      <ModalNursingHome data={{...selectedInfo.data}} userName={profileData.name}/>
+                      <ModalNursingHome selectedData={{...selectedInfo.data}} profileData={profileData}/>
                       : null
                     }
                   </div>

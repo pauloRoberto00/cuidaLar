@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/Modal.css';
 
 const ModalCaregiver = data => {
-    const { _id, name, cpf, email, state, city, specialization } = data.data;
+    const { _id, name, cpf, email, state, city, specialization } = data.selectedData;
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -28,7 +28,7 @@ const ModalCaregiver = data => {
         try {
             const comment = {
                 userId: _id, 
-                userName: data.userName,
+                userName: data.profileData.name,
                 type: 'caregiver', 
                 content: newComment,
                 date: new Date()
@@ -127,7 +127,9 @@ const ModalCaregiver = data => {
                     ) : (
                         comments.map((comment, index) => (
                             <div key={index} className="comment">
-                                <button className='close-button' onClick={() => handleDeleteComment(comment._id)}>✖</button>
+                                {comment.userId === data.profileData._id && (
+                                    <button className='close-button' onClick={() => handleDeleteComment(comment._id)}>✖</button>
+                                )}
                                 <p>"{comment.content}"</p>
                                 <p>
                                     <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>
