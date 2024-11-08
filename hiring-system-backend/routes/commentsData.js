@@ -28,10 +28,11 @@ router.delete('/comments/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const comment = await Comment.findById(id);
+        console.log(comment)
         if(comment){
             await comment.remove();
             res.status(200).json({ message: 'Comentário deletado com sucesso!' });
-        } else {
+        } else{
             res.status(404).json({ message: 'Comentário não encontrado!' });
         }
     } catch (error) {
