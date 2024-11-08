@@ -64,6 +64,7 @@ const PatientDashboard = () => {
         if(coords){
           try{
             const cities = await searchNearbyCities(coords.lat, coords.lng);
+            console.log(cities)
             const caregiversData = [];
             const nursingHomesData = [];
             setLoadingCaregivers(true);
