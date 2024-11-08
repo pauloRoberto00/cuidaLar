@@ -151,11 +151,11 @@ const Home = () => {
         </div>
       </footer>
       <Modal isOpen={isLoginModalOpen} onRequestClose={closeModal} contentLabel="Login Modal" className="modal" overlayClassName="overlay">
-        <button className='close-modal' onClick={closeModal}>✖</button>
+        <button className='close-button' onClick={closeModal}>✖</button>
         <Login/>
       </Modal>
       <Modal isOpen={isRegisterModalOpen} onRequestClose={closeModal} contentLabel="Register Modal" className="modal" overlayClassName="overlay">
-        <button className='close-modal' onClick={closeModal}>✖</button>
+        <button className='close-button' onClick={closeModal}>✖</button>
         <Register/>
       </Modal>
     </div>
