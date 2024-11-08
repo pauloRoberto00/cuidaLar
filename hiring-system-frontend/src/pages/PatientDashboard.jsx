@@ -67,6 +67,7 @@ const PatientDashboard = () => {
             const stateCities = await getCities(profileData.state);
             const stateCitiesNames = stateCities.map(city => city.nome)
             const places = await searchNearbyPlaces(coords.lat, coords.lng);
+            console.log(places)
             places.map(place => {
               if(stateCitiesNames.includes(place) && !cities.includes(place)) cities.push(place); 
             });
