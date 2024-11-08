@@ -48,7 +48,6 @@ const ModalNursingHome = data => {
             try {
                 await axios.delete(`${apiUrl}/commentsData/comments/${commentId}`);
                 setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
-                alert('Comentário deletado com sucesso!');
             } catch (error) {
                 console.error('Erro ao deletar comentário:', error);
                 alert('Erro ao deletar comentário.');
