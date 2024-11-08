@@ -158,7 +158,7 @@ const CaregiverDashboard = () => {
             {
               isModalOpen && selectedInfo && (
                 <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel="Information Modal" className="modal" overlayClassName="overlay">
-                    <button className='close-modal' onClick={closeModal}>✖</button>
+                    <button className='close-button' onClick={closeModal}>✖</button>
                     <div className='modal-content'>
                       {
                         selectedInfo.info === "profile" ?

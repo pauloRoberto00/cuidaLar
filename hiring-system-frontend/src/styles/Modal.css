@@ -82,7 +82,7 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-button.close-modal {
+button.close-button {
     font: normal 20px "DM Sans";
     background: none;
     border: none;

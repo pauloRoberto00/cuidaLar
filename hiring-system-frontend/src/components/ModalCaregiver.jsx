@@ -128,7 +128,7 @@ const ModalCaregiver = data => {
                     ) : (
                         comments.map((comment, index) => (
                             <div key={index} className="comment">
-                                <button className='comment-delete' onClick={() => handleDeleteComment(comment._id)}>✖</button>
+                                <button className='close-button' onClick={() => handleDeleteComment(comment._id)}>✖</button>
                                 <p>"{comment.content}"</p>
                                 <p>
                                     <strong>{comment.userName} - {new Date(comment.date).toLocaleString()}</strong>

@@ -115,12 +115,3 @@
     overflow-wrap: break-word;
     text-align: justify;
 }
-
-.comment-delete {
-    font: normal 20px "DM Sans";
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    float: right;
-}
