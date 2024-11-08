@@ -69,18 +69,14 @@ const PatientDashboard = () => {
             setLoadingCaregivers(true);
             setLoadingNursingHomes(true);
       
-            const caregiversPromises = cities.map(city =>
-              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
-            );
-  
-            const nursingHomesPromises = cities.map(city =>
-              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
-            );
+            const caregiversPromises = cities.map(city => axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`));
+            const nursingHomesPromises = cities.map(city => axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`));
   
             const caregiversResponses = await Promise.all(caregiversPromises);
             const nursingHomesResponses = await Promise.all(nursingHomesPromises);
   
             caregiversResponses.forEach(response => {
+              console.log(response.data)
               if(!caregiversData.includes(response.data)) caregiversData.push(...response.data);
             });
             nursingHomesResponses.forEach(response => {
@@ -98,11 +94,7 @@ const PatientDashboard = () => {
           }
         }
     } 
-    console.log("useeffect")
-    if(!dataFetched){
-      fetchCaregiversAndNursingHomes();
-      console.log("fetch")
-    }
+    if(!dataFetched) fetchCaregiversAndNursingHomes();
   }, []);
   
   const handleProfileInfo = () => {
