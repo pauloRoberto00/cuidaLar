@@ -13,6 +13,7 @@ const ModalCaregiver = data => {
             try {
                 const response = await axios.get(`${apiUrl}/commentsData/comments/${_id}`);
                 setComments(response.data.comments);
+                console.log(comments);
             } catch (error) {
                 console.error('Erro ao carregar os comentários:', error);
             }
