@@ -58,43 +58,45 @@ const PatientDashboard = () => {
 
 
   useEffect(() => {
-    const fetchCaregiversAndNursingHomes = async () => {
-      const city = profileData.city;
-      const coords = await getCoordinates(city);
-        if(coords){
-          try{
-            const cities = await searchNearbyCities(coords.lat, coords.lng);
-            const caregiversData = [];
-            const nursingHomesData = [];
-            setLoadingCaregivers(true);
-            setLoadingNursingHomes(true);
-      
-            const caregiversPromises = cities.map(city =>
-              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
-            );
-  
-            const nursingHomesPromises = cities.map(city =>
-              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
-            );
-  
-            const caregiversResponses = await Promise.all(caregiversPromises);
-            const nursingHomesResponses = await Promise.all(nursingHomesPromises);
-  
-            caregiversResponses.forEach(response => caregiversData.push(...response.data));
-            nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
-  
-            setCaregivers(caregiversData);
-            setNursingHomes(nursingHomesData);
-            setDataFetched(true);
-          }catch (error) {
-            console.error('Error fetching data:', error);
-          } finally {
-            setLoadingCaregivers(false);
-            setLoadingNursingHomes(false);
+    if(!dataFetched){
+      const fetchCaregiversAndNursingHomes = async () => {
+        const city = profileData.city;
+        const coords = await getCoordinates(city);
+          if(coords){
+            try{
+              const cities = await searchNearbyCities(coords.lat, coords.lng);
+              const caregiversData = [];
+              const nursingHomesData = [];
+              setLoadingCaregivers(true);
+              setLoadingNursingHomes(true);
+        
+              const caregiversPromises = cities.map(city =>
+                axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/caregiver`)
+              );
+    
+              const nursingHomesPromises = cities.map(city =>
+                axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/nursing-home`)
+              );
+    
+              const caregiversResponses = await Promise.all(caregiversPromises);
+              const nursingHomesResponses = await Promise.all(nursingHomesPromises);
+    
+              caregiversResponses.forEach(response => caregiversData.push(...response.data));
+              nursingHomesResponses.forEach(response => nursingHomesData.push(...response.data));
+    
+              setCaregivers(caregiversData);
+              setNursingHomes(nursingHomesData);
+              setDataFetched(true);
+            }catch (error) {
+              console.error('Error fetching data:', error);
+            } finally {
+              setLoadingCaregivers(false);
+              setLoadingNursingHomes(false);
+            }
           }
-        }
+      } 
+      fetchCaregiversAndNursingHomes();
     } 
-    if(dataFetched == false) fetchCaregiversAndNursingHomes();
   }, [profileData.city, apiUrl, dataFetched]);
   
   const handleProfileInfo = () => {
