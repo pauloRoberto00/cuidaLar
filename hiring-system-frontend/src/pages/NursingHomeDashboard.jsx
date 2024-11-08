@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import getCoordinates from '../components/getCoordinates';
-import searchNearbyCities from '../components/searchNearbyCities';
+import { getCities } from '../components/getLocation';
+import searchNearbyPlaces from '../components/searchNearbyPlaces';
 import * as JWT from 'jwt-decode';
 import '../styles/Dashboard.css';
 import Modal from 'react-modal';
@@ -34,8 +35,8 @@ const NursingHomeDashboard = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const fetchLocationDetails = () => {
-      axios.get(`${apiUrl}/userData/locationDetails/${profileData._id}`)
+    const fetchLocationDetails = async () => {
+      await axios.get(`${apiUrl}/userData/locationDetails/${profileData._id}`)
       .then(response => {
         const locationDetails = response.data.locationDetails;
         if(locationDetails){
@@ -59,22 +60,15 @@ const NursingHomeDashboard = () => {
       const coords = await getCoordinates(city);
         if(coords){
           try{
-            const cities = await searchNearbyCities(coords.lat, coords.lon);
+            const cities = await getCities(profileData.state);
+            const places = await searchNearbyPlaces(coords.lat, coords.lng);
+            places.map(place => {
+              if(stateCities.includes(place)) cities.push(place); 
+            });
             const patientsData = [];
             setLoadingPatients(true);
 
-            // for(const city of cities){
-            //   try{
-            //     const patientsResponse = await axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`);
-            //     patientsData.push(...(patientsResponse.data || []));
-            //   }catch(error){
-            //     console.error('Error fetching patients:', error);
-            //   }
-            // }
-
-            const patientsPromises = cities.map(city =>
-              axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`)
-            );
+            const patientsPromises = cities.map(city => axios.get(`${apiUrl}/searchByCity/city/${encodeURIComponent(city)}/patient`));
             const patientsResponses = await Promise.all(patientsPromises);
             patientsResponses.forEach(response => patientsData.push(...response.data));
 

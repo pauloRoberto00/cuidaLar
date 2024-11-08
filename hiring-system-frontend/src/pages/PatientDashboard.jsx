@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import getCoordinates from '../components/getCoordinates';
-import searchNearbyCities from '../components/searchNearbyCities';
+import searchNearbyPlaces from '../components/searchNearbyPlaces';
 import * as JWT from 'jwt-decode';
 import '../styles/Dashboard.css';
 import Modal from 'react-modal';
@@ -10,6 +10,7 @@ import ModalProfile from '../components/ModalProfile';
 import ModalCaregiver from '../components/ModalCaregiver';
 import ModalNursingHome from '../components/ModalNursingHome';
 import RegisterMedicalRecord from '../components/RegisterMedicalRecord';
+import { getCities } from '../components/getLocation';
 
 Modal.setAppElement('#root'); 
 
@@ -37,8 +38,8 @@ const PatientDashboard = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const fetchMedicalRecord = () => {
-      axios.get(`${apiUrl}/userData/medicalRecords/${profileData._id}`)
+    const fetchMedicalRecord = async () => {
+      await axios.get(`${apiUrl}/userData/medicalRecords/${profileData._id}`)
       .then(response => {
         const medicalRecord = response.data.medicalRecord;
         if(medicalRecord){
@@ -62,9 +63,11 @@ const PatientDashboard = () => {
       const coords = await getCoordinates(city);
         if(coords){
           try{
-            const cities = await searchNearbyCities(coords.lat, coords.lng);
-
-            console.log(cities)
+            const cities = getCities(profileData.state);
+            const places = await searchNearbyPlaces(coords.lat, coords.lng);
+            places.map(place => {
+              if(stateCities.includes(place)) cities.push(place); 
+            });
             const caregiversData = [];
             const nursingHomesData = [];
             setLoadingCaregivers(true);
