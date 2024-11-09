@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/Modal.css';
 
 const ModalNursingHome = data => {
-    const { _id, name, cpf, email, state, city, locationDetails } = data.data;
+    const { _id, name, cpf, email, state, city, locationDetails } = data.selectedData;
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const apiUrl = import.meta.env.VITE_API_URL;
