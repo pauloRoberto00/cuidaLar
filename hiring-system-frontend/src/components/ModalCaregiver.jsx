@@ -31,7 +31,7 @@ const ModalCaregiver = data => {
                 date: new Date()
             };
             await axios.post(`${apiUrl}/commentsData/comments/`, comment);
-            await fetchComments();
+            fetchComments();
             setNewComment('');
             alert('Comentário salvo com sucesso!');
         } catch (error) {
