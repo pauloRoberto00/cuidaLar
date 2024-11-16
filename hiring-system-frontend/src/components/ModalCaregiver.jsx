@@ -16,7 +16,7 @@ const ModalCaregiver = data => {
             console.error('Erro ao carregar os comentários:', error);
         }
     };
-    useEffect(() => fetchComments(), [_id]);
+    useEffect(() => fetchComments(), [apiUrl, _id]);
 
     const handleCommentChange = (e) => setNewComment(e.target.value);
 
