@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Modal.css';
+import getComments from './getComments';
 
 const ModalNursingHome = data => {
     const { _id, name, cpf, email, state, city, locationDetails } = data.selectedData;
@@ -9,16 +10,8 @@ const ModalNursingHome = data => {
     const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        const fetchComments = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/commentsData/comments/${_id}`);
-                setComments(response.data.comments);
-            } catch (error) {
-                console.error('Erro ao carregar os comentários:', error);
-            }
-        };
-        
-        fetchComments();
+        const commentsData = getComments(_id);
+        setComments(commentsData);
     }, [_id]);
 
     const handleCommentChange = (e) => setNewComment(e.target.value);
@@ -34,7 +27,7 @@ const ModalNursingHome = data => {
                 date: new Date()
             };
             await axios.post(`${apiUrl}/commentsData/comments/`, comment);
-            setComments(prevComments => [...prevComments, comment]);
+            await getComments(_id).then(data => setComments(data));
             setNewComment('');
             alert('Comentário salvo com sucesso!');
         } catch (error) {
