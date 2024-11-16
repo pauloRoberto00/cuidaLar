@@ -16,7 +16,15 @@ const ModalNursingHome = data => {
             console.error('Erro ao carregar os comentários:', error);
         }
     };
-    useEffect(() => fetchComments(), [apiUrl, _id]);
+    
+    useEffect(() => {
+        if(data.selectedData){
+            fetchComments();
+        }else{
+            setComments([]);
+            setNewComment("");
+        }
+    }, [data.selectedData]);
 
     const handleCommentChange = (e) => setNewComment(e.target.value);
 
