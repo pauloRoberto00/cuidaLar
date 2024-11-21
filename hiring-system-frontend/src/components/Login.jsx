@@ -10,6 +10,7 @@ const Login = () => {
     password: '',
   });
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const errorRef = useRef(null);
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -21,7 +22,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
+
       const response = await axios.post(`${apiUrl}/userData/login`, formData);
       const token = response.data;
       localStorage.setItem('token', token);
@@ -44,6 +47,8 @@ const Login = () => {
       setError(error.response ? error.response.data.message : 'Erro desconhecido');
       errorRef.current.style.display = "block";
       errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,7 +70,9 @@ const Login = () => {
           placeholder="Senha"
           required
         />
-        <button type="submit">Entrar</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Carregando...' : 'Entrar'}
+        </button>
       </form>
       <div ref={errorRef} className="register-data-error-container">{error}</div>
     </div>

@@ -21,6 +21,7 @@ const Register = () => {
   const [cities, setCities] = useState([]);
   const errorRef = useRef(null);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   
   useEffect(() => {
@@ -54,6 +55,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const cpf = formData.cpf.replace(/\D/g, '');
     const isValid = isValidCPF(cpf);
     if(isValid){
@@ -80,6 +82,8 @@ const Register = () => {
         setError(error.response ? error.response.data.message : 'Erro desconhecido');
         errorRef.current.style.display = "block";
         errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } finally {
+        setIsLoading(false);
       }
     }else{
       setError('Cadastro de Pessoa Física (CPF) Inválido!');
@@ -151,7 +155,9 @@ const Register = () => {
           <option value="caregiver">Cuidador</option>
           <option value="nursing-home">Casa de Repouso</option>
         </select>
-        <button type="submit">Cadastrar</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Carregando...' : 'Cadastrar'}
+        </button>
       </form>
       <div ref={errorRef} className='register-data-error-container'>{error}</div>
     </div>
