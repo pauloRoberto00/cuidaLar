@@ -55,10 +55,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     const cpf = formData.cpf.replace(/\D/g, '');
     const isValid = isValidCPF(cpf);
     if(isValid){
+      setIsLoading(true);
       try {
         const response = await axios.post(`${apiUrl}/userData/register`, formData);
         const token = response.data;

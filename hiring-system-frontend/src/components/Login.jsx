@@ -24,7 +24,6 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-
       const response = await axios.post(`${apiUrl}/userData/login`, formData);
       const token = response.data;
       localStorage.setItem('token', token);
